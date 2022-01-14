@@ -504,6 +504,7 @@ template,
 .header-contacts__phone-number-accord a {
 	-webkit-transition: 0.5s;
 	transition: 0.5s;
+	/* padding-top: 23px; */
 	opacity: 0;
 }
 
