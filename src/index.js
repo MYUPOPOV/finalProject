@@ -1,5 +1,5 @@
-import first from './modules/first';
+import menu from './modules/menu';
 import second from './modules/second';
 
-first();
+menu();
 second();
