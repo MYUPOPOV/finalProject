@@ -1,5 +1,5 @@
 import menu from './modules/menu';
-import second from './modules/second';
+import smoothScroll from './modules/smoothScroll';
 
 menu();
-second();
+smoothScroll();
