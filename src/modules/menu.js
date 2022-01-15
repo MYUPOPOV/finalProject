@@ -5,6 +5,7 @@ const menu = () => {
 	const menuIcon = document.querySelector('.menu__icon');
 	const closeMenu = document.querySelector('.close-menu');
 	const popupDialogMenu = document.querySelector('.popup-dialog-menu');
+	let isPhoneNumberShown = false;
 
 	const menuAnimationOn = () => {
 		const popupDialogMenu = document.querySelector('.popup-dialog-menu');
@@ -32,8 +33,18 @@ const menu = () => {
 
 	headerContactsArrowBtn.addEventListener('click', () => {
 		const phoneNumberAccord = document.querySelector('.header-contacts__phone-number-accord a');
-		phoneNumberAccord.style.paddingTop = '23px';
-		phoneNumberAccord.style.opacity = '100%';
+
+		if (!isPhoneNumberShown) {
+			phoneNumberAccord.style.paddingTop = '23px';
+			phoneNumberAccord.style.opacity = '100%';
+			headerContactsArrowBtn.querySelector('img').style.transform = 'rotate(180deg)';
+		} else {
+			phoneNumberAccord.style.paddingTop = '0px';
+			phoneNumberAccord.style.opacity = '0';
+			headerContactsArrowBtn.querySelector('img').style.transform = 'rotate(0deg)';
+		}
+
+		isPhoneNumberShown = !isPhoneNumberShown;
 	});
 
 	menuIcon.addEventListener('click', () => {
