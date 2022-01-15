@@ -3,9 +3,9 @@
 const menu = () => {
 	const headerContactsArrowBtn = document.querySelector('.header-contacts__arrow');
 	const menuIcon = document.querySelector('.menu__icon');
-	const closeMenu = document.querySelector('.close-menu');
 	const popupDialogMenu = document.querySelector('.popup-dialog-menu');
 	let isPhoneNumberShown = false;
+	let isMenuShown = false;
 
 	const menuAnimationOn = () => {
 		const popupDialogMenu = document.querySelector('.popup-dialog-menu');
@@ -19,6 +19,9 @@ const menu = () => {
 		}
 		popupDialogMenu.style.transition = '1s';
 		popupDialogMenu.style.transform = 'translate3d(0, 0, 0)';
+		setTimeout(() => {
+			isMenuShown = true;
+		}, 500);
 	};
 
 	const menuAnimationOff = () => {
@@ -29,6 +32,7 @@ const menu = () => {
 		if (window.screen.width < 576) {
 			popupDialogMenu.style.transform = 'translate3d(0, -1040px, 0)';
 		}
+		isMenuShown = false;
 	};
 
 	headerContactsArrowBtn.addEventListener('click', () => {
@@ -47,12 +51,16 @@ const menu = () => {
 		isPhoneNumberShown = !isPhoneNumberShown;
 	});
 
-	menuIcon.addEventListener('click', () => {
+	menuIcon.addEventListener('click', (e) => {
+		e.preventDefault();
 		menuAnimationOn();
 	});
 
-	closeMenu.addEventListener('click', () => {
-		menuAnimationOff();
+	document.addEventListener('click', (e) => {
+		if (e.target.closest('.close-menu') || (isMenuShown && !e.target.closest('.popup-dialog-menu'))) {
+			e.preventDefault();
+			menuAnimationOff();
+		}
 	});
 
 	if (window.screen.width >= 576) {
