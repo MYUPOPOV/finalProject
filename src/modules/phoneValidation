@@ -30,7 +30,7 @@ const phoneValidation = () => {
 	}
 
 	namePhone.forEach((item) => {
-		console.log('~ item', item);
+		// console.log('~ item', item);
 		phoneMask(item);
 	});
 };

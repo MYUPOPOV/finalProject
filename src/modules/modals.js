@@ -5,6 +5,7 @@ const modals = () => {
 	const popup = document.querySelectorAll('.popup');
 	const linkListRepair = document.querySelectorAll('.link-list-repair');
 	const linkPrivacy = document.querySelectorAll('span.link-privacy');
+	const consultationBtns = document.querySelectorAll('.button.button_wide');
 
 	const showModalRepairTypes = () => {
 		popup.forEach((item) => {
@@ -32,6 +33,19 @@ const modals = () => {
 		});
 	};
 
+	const showModalConsultation = () => {
+		popup.forEach((item) => {
+			if (item.classList.contains('popup-consultation')) {
+				item.style.visibility = 'visible';
+				item.addEventListener('click', (e) => {
+					if (!e.target.closest('.feedback-wrap') || e.target.closest('.close-consultation')) {
+						item.style.visibility = '';
+					}
+				});
+			}
+		});
+	};
+
 	menuLink.addEventListener('click', () => {
 		showModalRepairTypes();
 	});
@@ -43,6 +57,12 @@ const modals = () => {
 	linkPrivacy.forEach((item) => {
 		item.addEventListener('click', () => {
 			showModalPrivacy();
+		});
+	});
+
+	consultationBtns.forEach((item) => {
+		item.addEventListener('click', () => {
+			showModalConsultation();
 		});
 	});
 };
