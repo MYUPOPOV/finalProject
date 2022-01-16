@@ -12,12 +12,12 @@ const phoneValidation = () => {
 			if (i !== -1) {
 				newValue = newValue.slice(0, i);
 			}
-			let reg = mask
+			let regexp = mask
 				.substring(0, this.value.length)
 				.replace(/_+/g, (a) => '\\d{1,' + a.length + '}')
 				.replace(/[+()]/g, '\\$&');
-			reg = new RegExp('^' + reg + '$');
-			if (!reg.test(this.value) || this.value.length < 5 || (keyCode > 47 && keyCode < 58)) {
+			regexp = new RegExp('^' + regexp + '$');
+			if (!regexp.test(this.value) || this.value.length < 5 || (keyCode > 47 && keyCode < 58)) {
 				this.value = newValue;
 			}
 			if (event.type === 'blur' && this.value.length < 5) {
