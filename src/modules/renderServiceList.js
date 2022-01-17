@@ -26,11 +26,19 @@ const renderServiceList = () => {
 
 	const renderItems = (array) => {
 		console.log('~ array', array);
-		const firstRepairTypesContentTable = document.querySelector('.popup-repair-types-content-table__list');
-		const repairTypesContentTable = document.querySelectorAll('.popup-repair-types-content-table__list');
-		repairTypesContentTable.forEach((item) => {
-			item.innerHTML = '';
-		});
+		const fullRepairTypesContentTable = document.querySelector('.popup-repair-types-content-table');
+		fullRepairTypesContentTable.innerHTML = '';
+		const newTable = document.createElement('table');
+		newTable.classList.add('popup-repair-types-content-table__list');
+		fullRepairTypesContentTable.append(newTable);
+		const newTbody = document.createElement('tbody');
+		document.querySelector('.popup-repair-types-content-table__list').append(newTbody);
+
+		// const firstRepairTypesContentTable = document.querySelector('.popup-repair-types-content-table__list');
+		// const repairTypesContentTable = document.querySelectorAll('.popup-repair-types-content-table__list');
+		// repairTypesContentTable.forEach((item) => {
+		// 	item.innerHTML = '';
+		// });
 
 		array.forEach(({ type, name, units, cost }, index) => {
 			console.log('~ type', type);
@@ -46,11 +54,12 @@ const renderServiceList = () => {
         <td class="repair-types-value">${units.substring(0, 1)}<sup>${units.substring(1, 2)}</sup></td>
         <td class="repair-types-value">${cost} руб.</td>
         `;
-			firstRepairTypesContentTable.append(newTr);
+			document.querySelector('.popup-repair-types-content-table__list>tbody').append(newTr);
 		});
 	};
 
 	showActive('Потолок: Демонтажные работы');
+	getData('Потолок: Демонтажные работы');
 
 	navRepairTypeAllBtns.forEach((item) => {
 		item.addEventListener('click', (e) => {

@@ -1,11 +1,12 @@
 /*jshint esversion: 6 */
 
 const modals = () => {
-	const menuLink = document.querySelector('.link-list-menu>a');
+	// const menuLink = document.querySelector('.link-list-menu>a');
 	const popup = document.querySelectorAll('.popup');
 	const linkListRepair = document.querySelectorAll('.link-list-repair');
 	const linkPrivacy = document.querySelectorAll('span.link-privacy');
 	const consultationBtns = document.querySelectorAll('.button.button_wide');
+
 
 	const showModalRepairTypes = () => {
 		popup.forEach((item) => {
@@ -46,9 +47,9 @@ const modals = () => {
 		});
 	};
 
-	menuLink.addEventListener('click', () => {
-		showModalRepairTypes();
-	});
+	// menuLink.addEventListener('click', () => {
+	// 	showModalRepairTypes();
+	// });
 	linkListRepair.forEach((item) => {
 		item.addEventListener('click', () => {
 			showModalRepairTypes();

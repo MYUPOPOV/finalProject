@@ -4,6 +4,8 @@ const menu = () => {
 	const headerContactsArrowBtn = document.querySelector('.header-contacts__arrow');
 	const menuIcon = document.querySelector('.menu__icon');
 	const popupDialogMenu = document.querySelector('.popup-dialog-menu');
+	const popup = document.querySelectorAll('.popup');
+	const menuLink = document.querySelector('.link-list-menu>a');
 	let isPhoneNumberShown = false;
 	let isMenuShown = false;
 
@@ -35,6 +37,19 @@ const menu = () => {
 		isMenuShown = false;
 	};
 
+	const showModalRepairTypes = () => {
+		popup.forEach((item) => {
+			if (item.classList.contains('popup-repair-types')) {
+				item.style.visibility = 'visible';
+				item.addEventListener('click', (e) => {
+					if (!e.target.closest('.popup-repair-types-content') && !e.target.closest('.popup-repair-types-tab')) {
+						item.style.visibility = '';
+					}
+				});
+			}
+		});
+	};
+
 	headerContactsArrowBtn.addEventListener('click', () => {
 		const phoneNumberAccord = document.querySelector('.header-contacts__phone-number-accord a');
 
@@ -61,6 +76,11 @@ const menu = () => {
 			e.preventDefault();
 			menuAnimationOff();
 		}
+	});
+
+	menuLink.addEventListener('click', () => {
+		showModalRepairTypes();
+		menuAnimationOff();
 	});
 
 	if (window.screen.width >= 576) {
