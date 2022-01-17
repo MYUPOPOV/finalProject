@@ -1,16 +1,63 @@
 const sendForm = () => {
 	const feedbackForm = document.querySelectorAll('.feedback__form');
 	const feedbackBlockForm = document.querySelectorAll('.feedback-block__form');
-	// console.log('~ feedbackBlockForm', feedbackBlockForm);
+	const allSubmitForms = [...feedbackForm, ...feedbackBlockForm];
+	const popup = document.querySelectorAll('.popup');
 
-	const body = {
-		name: 'Max',
-		surname: 'Popov',
-		phone: '30-57-56',
+	const showModalThank = () => {
+		popup.forEach((item) => {
+			if (item.classList.contains('popup-thank')) {
+				item.style.visibility = 'visible';
+				item.addEventListener('click', (e) => {
+					if (!e.target.closest('.popup-thank-bg') || e.target.closest('.close-thank')) {
+						item.style.visibility = '';
+					}
+				});
+			}
+		});
+	};
+
+	const resetInputs = (list) => {
+		list.forEach((input) => {
+			if (input.name === 'phone' || input.name === 'name') {
+				input.value = '';
+			}
+			if (input.type === 'checkbox') {
+				input.checked = false;
+			}
+		});
+	};
+
+	const validate = (list) => {
+		let success = true;
+		list.forEach((input) => {
+			if (
+				(input.name === 'phone' && /^[\d+() +-]+$/.test(input.value) && input.value.length > 10) ||
+				(input.name === 'name' && /^[а-яА-Я ]+$/.test(input.value) && input.value.length > 1) ||
+				(input.type === 'checkbox' && input.checked)
+			) {
+				input.classList.add('success');
+				input.classList.remove('error');
+			} else {
+				input.classList.add('error');
+				input.classList.remove('success');
+			}
+
+			console.log('~ input.name', input.name);
+			console.log('~ input.type', input.type);
+			console.log('~ input.checked', input.checked);
+			console.log('~ input.classList', input.classList);
+		});
+		list.forEach((input) => {
+			if (input.classList.contains('error')) {
+				success = false;
+			}
+		});
+		return success;
 	};
 
 	const sendData = (body) => {
-		fetch('./server.php', {
+		return fetch('https://jsonplaceholder.typicode.com/posts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -19,19 +66,40 @@ const sendForm = () => {
 		});
 	};
 
-	[...feedbackForm, ...feedbackBlockForm].forEach((item) => {
-		// console.log(item);
-		item.addEventListener('submit', (e) => {
-			e.preventDefault();
-			sendData(body)
+	const submitForm = (form) => {
+		const formElements = form.querySelectorAll('input');
+		const formData = new FormData(form);
+		const formBody = {};
+		formData.forEach((val, key) => {
+			formBody[key] = val;
+		});
+
+		if (validate(formElements)) {
+			sendData(formBody)
 				.then((response) => {
-					if (response.status !== 200) {
+					if (response.status !== 201) {
 						throw new Error('Что то пошло не так');
+					} else {
+						return response.json();
 					}
+				})
+				.then((data) => {
+					console.log('data', data);
 				})
 				.catch((error) => {
 					console.log(error);
 				});
+			resetInputs(formElements);
+			showModalThank();
+		} else {
+			alert('Данные не валидны!');
+		}
+	};
+
+	allSubmitForms.forEach((item) => {
+		item.addEventListener('submit', (e) => {
+			e.preventDefault();
+			submitForm.bind(item)(item);
 		});
 	});
 };
