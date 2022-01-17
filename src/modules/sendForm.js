@@ -42,11 +42,6 @@ const sendForm = () => {
 				input.classList.add('error');
 				input.classList.remove('success');
 			}
-
-			console.log('~ input.name', input.name);
-			console.log('~ input.type', input.type);
-			console.log('~ input.checked', input.checked);
-			console.log('~ input.classList', input.classList);
 		});
 		list.forEach((input) => {
 			if (input.classList.contains('error')) {
@@ -79,18 +74,17 @@ const sendForm = () => {
 				.then((response) => {
 					if (response.status !== 201) {
 						throw new Error('Что то пошло не так');
-					} else {
-						return response.json();
 					}
+					return response.json();
 				})
 				.then((data) => {
 					console.log('data', data);
+					resetInputs(formElements);
+					showModalThank();
 				})
 				.catch((error) => {
 					console.log(error);
 				});
-			resetInputs(formElements);
-			showModalThank();
 		} else {
 			alert('Данные не валидны!');
 		}
