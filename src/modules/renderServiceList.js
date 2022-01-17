@@ -33,13 +33,6 @@ const renderServiceList = () => {
 		fullRepairTypesContentTable.append(newTable);
 		const newTbody = document.createElement('tbody');
 		document.querySelector('.popup-repair-types-content-table__list').append(newTbody);
-
-		// const firstRepairTypesContentTable = document.querySelector('.popup-repair-types-content-table__list');
-		// const repairTypesContentTable = document.querySelectorAll('.popup-repair-types-content-table__list');
-		// repairTypesContentTable.forEach((item) => {
-		// 	item.innerHTML = '';
-		// });
-
 		array.forEach(({ type, name, units, cost }, index) => {
 			console.log('~ type', type);
 			const newTr = document.createElement('tr');
