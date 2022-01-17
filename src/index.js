@@ -6,6 +6,7 @@ import test from './modules/test';
 import sendForm from './modules/sendForm';
 import renderServiceList from './modules/renderServiceList';
 import accordeonFAQ from './modules/accordeonFAQ';
+import successFormulaHints from './modules/successFormulaHints';
 
 menu();
 smoothScroll();
@@ -15,3 +16,4 @@ test();
 sendForm();
 renderServiceList();
 accordeonFAQ();
+successFormulaHints();
