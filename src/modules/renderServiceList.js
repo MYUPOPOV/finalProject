@@ -62,18 +62,6 @@ const renderServiceList = () => {
 			}
 		});
 	});
-
-	const popup = document.querySelectorAll('.popup');
-	popup.forEach((item) => {
-		if (item.classList.contains('popup-repair-types')) {
-			item.style.visibility = 'visible';
-			item.addEventListener('click', (e) => {
-				if (!e.target.closest('.popup-repair-types-content') && !e.target.closest('.popup-repair-types-tab')) {
-					item.style.visibility = '';
-				}
-			});
-		}
-	});
 };
 
 export default renderServiceList;
