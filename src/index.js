@@ -5,6 +5,7 @@ import phoneValidation from './modules/phoneValidation';
 import test from './modules/test';
 import sendForm from './modules/sendForm';
 import renderServiceList from './modules/renderServiceList';
+import accordeonFAQ from './modules/accordeonFAQ';
 
 menu();
 smoothScroll();
@@ -13,3 +14,4 @@ phoneValidation();
 test();
 sendForm();
 renderServiceList();
+accordeonFAQ();
