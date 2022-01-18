@@ -6,13 +6,21 @@ const contract = () => {
 	const popupTransparencyElem = document.querySelector('.popup-transparency');
 	const popupTransparencySlider = document.querySelector('.popup-transparency-slider');
 	const sliderCounterContentTotal = document.querySelectorAll('.slider-counter-content__total');
-	const sliderСounterСontentСurrent = document.querySelectorAll('.slider-counter-content__current');
-	sliderCounterContentTotal[4].textContent = '3';
-	sliderСounterСontentСurrent[4].textContent = '1';
+	const sliderСounterСontentСurrent = document.getElementById('slider-counter-contract');
+	const transparencyIitemElem = document.querySelectorAll('.transparency-item');
+  const transparencySliderWrapElem = document.querySelector('.transparency-slider-wrap');
+	const transparencySliderElem = document.querySelector('.transparency-slider');
+
+
+	const popup = document.querySelectorAll('.popup');
+	sliderCounterContentTotal[3].textContent = '3';
+	sliderСounterСontentСurrent.textContent = '1';
+
+	// popupTransparencyElem.style.display = 'flex';
 
 	const prevSlide = (elem, index) => {
 		if (index >= 0) {
-			sliderСounterСontentСurrent[4].textContent = 1 + currentSlideDocumentPopup;
+			sliderСounterСontentСurrent.textContent = 1 + currentSlideDocumentPopup;
 
 			const go = () => {
 				countDocumentPopup -= 2;
@@ -35,7 +43,7 @@ const contract = () => {
 
 	const nextSlide = (elem, index) => {
 		if (index <= 2) {
-			sliderСounterСontentСurrent[4].textContent = currentSlideDocumentPopup + 1;
+			sliderСounterСontentСurrent.textContent = currentSlideDocumentPopup + 1;
 			const go = () => {
 				countDocumentPopup += 2;
 				[...elem.children].forEach((item) => {
@@ -54,6 +62,21 @@ const contract = () => {
 			currentSlideDocumentPopup--;
 		}
 	};
+
+	transparencyIitemElem.forEach((item) => {
+		item.addEventListener('click', () => {
+			popup.forEach((item) => {
+				if (item.classList.contains('popup-transparency')) {
+					item.style.visibility = 'visible';
+					item.addEventListener('click', (e) => {
+						if (!e.target.closest('.popup-transparency-slider-wrap') && !e.target.closest('.popup-arrow_transparency')) {
+							item.style.visibility = '';
+						}
+					});
+				}
+			});
+		});
+	});
 
 	popupTransparencyElem.addEventListener('click', (event) => {
 		const target = event.target;

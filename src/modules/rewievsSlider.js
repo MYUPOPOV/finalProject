@@ -6,12 +6,14 @@ const rewievsSlider = () => {
 	let currentSlide = 0;
 	let count = 0;
 
+	reviewsSlider.style.display = 'flex';
+
 	const prevSlide = (elem, index) => {
 		if (index >= 0) {
 			const move = () => {
 				count -= 5;
 				[...elem.children].forEach((item) => {
-					item.style.transform = `translateY(${-count}%)`;
+					item.style.transform = `translateX(${-count}%)`;
 				});
 				const animate = requestAnimationFrame(move);
 				if (count <= 0) {
@@ -41,7 +43,7 @@ const rewievsSlider = () => {
 			const move = () => {
 				count += 5;
 				[...elem.children].forEach((item) => {
-					item.style.transform = `translateY(${-count}%)`;
+					item.style.transform = `translateX(${-count}%)`;
 				});
 				const animate = requestAnimationFrame(move);
 				if (count <= 0) {

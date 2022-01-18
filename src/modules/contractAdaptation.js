@@ -75,9 +75,6 @@ const contractAdaptation = () => {
 			currentSlideDocument++;
 			nextSlideDocument(transparencySliderElem, currentSlideDocument);
 		}
-		if (target.matches('.transparency-item__img')) {
-			popupTransparencyElem.classList.add('visible');
-		}
 	});
 };
 

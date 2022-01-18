@@ -24,6 +24,6 @@ accordeonFAQ();
 successFormulaHints();
 repairTypesSlider();
 portfolioSlider();
-// contract();
-contractAdaptation();
+contract();
+// contractAdaptation();
 rewievsSlider();
