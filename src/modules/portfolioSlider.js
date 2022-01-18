@@ -2,6 +2,13 @@
 
 const portfolioSlider = () => {
 	const portfolio = document.querySelector('#portfolio');
+	/* Всплывающие окна */
+	const popup = document.querySelectorAll('.popup');
+	const popupPortfolio = document.querySelector('.popup-portfolio');
+	const popupPortfolioSliderWrap = document.querySelector('.popup-portfolio-slider-wrap');
+	const popupPortfolioSlider = document.querySelector('.popup-portfolio-slider');
+	const popupPortfolioText = document.querySelectorAll('.popup-portfolio-text');
+
 	const portfolioSlider = document.querySelector('.portfolio-slider');
 	const portfolioSliderWrap = document.querySelector('.portfolio-slider-wrap');
 	const portfolioSliderMobile = document.querySelector('.portfolio-slider-mobile');
@@ -10,12 +17,6 @@ const portfolioSlider = () => {
 
 	const portfolioArrowLeft = document.querySelector('#portfolio-arrow_left');
 	const portfolioArrowRight = document.querySelector('#portfolio-arrow_right');
-
-	// popup
-	const popupPortfolio = document.querySelector('.popup-portfolio');
-	const popupPortfolioSliderWrap = document.querySelector('.popup-portfolio-slider-wrap');
-	const popupPortfolioSlider = document.querySelector('.popup-portfolio-slider');
-	const popupPortfolioText = document.querySelectorAll('.popup-portfolio-text');
 
 	const sliderCounterContentCurrent = document.querySelectorAll('.slider-counter-content__current');
 	const sliderCounterContentTotal = document.querySelectorAll('.slider-counter-content__total');
@@ -219,15 +220,25 @@ const portfolioSlider = () => {
 	};
 
 	portfolio.addEventListener('click', (e) => {
-		const target = e.target;
-		if (target.closest('.portfolio-slider__slide-frame')) {
-			popupPortfolio.classList.add('visible');
+		if (e.target.closest('.portfolio-slider__slide-frame')) {
+			popup.forEach((item) => {
+				if (item.classList.contains('popup-portfolio')) {
+					item.style.visibility = 'visible';
+					item.addEventListener('click', (e) => {
+						if (!e.target.closest('.popup-dialog-portfolio')) {
+							item.style.visibility = '';
+						}
+					});
+				}
+			});
+
+			// popupPortfolio.classList.add('visible');
 		}
-		if (target.closest('#portfolio-arrow_left')) {
+		if (e.target.closest('#portfolio-arrow_left')) {
 			countSliderPortfolio--;
 			prevPortfolio(portfolioSlider, countSliderPortfolio);
 		}
-		if (target.closest('#portfolio-arrow_right')) {
+		if (e.target.closest('#portfolio-arrow_right')) {
 			countSliderPortfolio++;
 			nextPortfolio(portfolioSlider, countSliderPortfolio);
 		}

@@ -10,7 +10,6 @@ import successFormulaHints from './modules/successFormulaHints';
 import repairTypesSlider from './modules/repairTypesSlider';
 import portfolioSlider from './modules/portfolioSlider';
 import contract from './modules/contract';
-import contractAdaptation from './modules/contractAdaptation';
 import rewievsSlider from './modules/rewievsSlider';
 
 menu();
@@ -25,5 +24,4 @@ successFormulaHints();
 repairTypesSlider();
 portfolioSlider();
 contract();
-// contractAdaptation();
 rewievsSlider();
