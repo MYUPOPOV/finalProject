@@ -1,81 +1,80 @@
 /*jshint esversion: 6 */
 
 const rewievsSlider = () => {
-	const reviewsSliderWrapElem = document.querySelector('.reviews-slider-wrap'); // Блок со стрелочками
-	const reviewsSliderElem = document.querySelector('.reviews-slider'); // Все блоки слайдера
-
-	let countReviews = 0;
-	let currentSlideReviews = 0;
+	const reviewsSliderWrap = document.querySelector('.reviews-slider-wrap'); // Блок со стрелочками
+	const reviewsSlider = document.querySelector('.reviews-slider'); // Все блоки слайдера
+	let currentSlide = 0;
+	let count = 0;
 
 	const prevSlide = (elem, index) => {
 		if (index >= 0) {
-			const go = () => {
-				countReviews -= 5;
+			const move = () => {
+				count -= 5;
 				[...elem.children].forEach((item) => {
-					item.style.transform = `translateY(${-countReviews}%)`;
+					item.style.transform = `translateY(${-count}%)`;
 				});
-				const animate = requestAnimationFrame(go);
-				if (countReviews <= 0) {
+				const animate = requestAnimationFrame(move);
+				if (count <= 0) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 100) {
+				if (count === 100) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 200) {
+				if (count === 200) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 300) {
+				if (count === 300) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 400) {
+				if (count === 400) {
 					cancelAnimationFrame(animate);
 				}
 			};
-			requestAnimationFrame(go);
+			requestAnimationFrame(move);
 		} else {
-			currentSlideReviews = 0;
+			currentSlide = 0;
 		}
 	};
 
 	const nextSlide = (elem, index) => {
 		if (index <= 4) {
-			const go = () => {
-				countReviews += 5;
+			const move = () => {
+				count += 5;
 				[...elem.children].forEach((item) => {
-					item.style.transform = `translateY(${-countReviews}%)`;
+					item.style.transform = `translateY(${-count}%)`;
 				});
-				const animate = requestAnimationFrame(go);
-				if (countReviews <= 0) {
+				const animate = requestAnimationFrame(move);
+				if (count <= 0) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 100) {
+				if (count === 100) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 200) {
+				if (count === 200) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 300) {
+				if (count === 300) {
 					cancelAnimationFrame(animate);
 				}
-				if (countReviews === 400) {
+				if (count === 400) {
 					cancelAnimationFrame(animate);
 				}
 			};
-			requestAnimationFrame(go);
+			requestAnimationFrame(move);
 		} else {
-			currentSlideReviews--;
+			currentSlide--;
 		}
 	};
 
 	/* Кликаем по стрелочке (влево вправо) */
-	reviewsSliderWrapElem.addEventListener('click', (e) => {
+	reviewsSliderWrap.addEventListener('click', (e) => {
 		if (e.target.closest('#reviews-arrow_left')) {
-			currentSlideReviews--;
-			prevSlide(reviewsSliderElem, currentSlideReviews);
+			currentSlide--;
+			prevSlide(reviewsSlider, currentSlide);
 		}
 		if (e.target.closest('#reviews-arrow_right')) {
-			currentSlideReviews++;
-			nextSlide(reviewsSliderElem, currentSlideReviews);
+			currentSlide++;
+			nextSlide(reviewsSlider, currentSlide);
 		}
 	});
 };
