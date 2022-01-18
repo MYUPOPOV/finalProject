@@ -25,7 +25,6 @@ const renderServiceList = () => {
 	};
 
 	const renderItems = (array) => {
-		console.log('~ array', array);
 		const fullRepairTypesContentTable = document.querySelector('.popup-repair-types-content-table');
 		fullRepairTypesContentTable.innerHTML = '';
 		const newTable = document.createElement('table');
@@ -34,7 +33,6 @@ const renderServiceList = () => {
 		const newTbody = document.createElement('tbody');
 		document.querySelector('.popup-repair-types-content-table__list').append(newTbody);
 		array.forEach(({ type, name, units, cost }, index) => {
-			console.log('~ type', type);
 			const newTr = document.createElement('tr');
 			newTr.classList.add('mobile-row');
 			if (index === 0) {
