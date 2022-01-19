@@ -9,7 +9,7 @@ import accordeonFAQ from './modules/accordeonFAQ';
 import successFormulaHints from './modules/successFormulaHints';
 import repairTypesSlider from './modules/repairTypesSlider';
 import portfolioSlider from './modules/portfolioSlider';
-import contract from './modules/contract';
+import contractSliderPopup from './modules/contractSliderPopup';
 import rewievsSlider from './modules/rewievsSlider';
 
 menu();
@@ -23,5 +23,5 @@ accordeonFAQ();
 successFormulaHints();
 repairTypesSlider();
 portfolioSlider();
-contract();
+contractSliderPopup();
 rewievsSlider();

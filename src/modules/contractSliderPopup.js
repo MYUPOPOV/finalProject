@@ -158,4 +158,4 @@ const contract = () => {
 	window.addEventListener('resize', adaptationDocumet);
 };
 
-export default contract;
+export default contractSliderPopup;
