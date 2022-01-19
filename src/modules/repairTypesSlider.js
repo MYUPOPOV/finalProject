@@ -1,10 +1,13 @@
 /*jshint esversion: 6 */
 
 const repairTypesSlider = () => {
-	const rowReverse = document.querySelector('.row_reverse');
-	const navListRepair = document.querySelector('.nav-list-repair');
-	const repairTypesSlider = document.querySelector('.repair-types-slider');
-	const typesRepairItem = document.querySelectorAll('.types-repair-item');
+	const rowReverse = document.querySelector('.row_reverse'); // Блок со слайдером и кнопками
+
+	const navListRepair = document.querySelector('.nav-list-repair'); // блок со всеми кнопками
+	const navigationButtons = document.querySelectorAll('.repair-types-nav__item'); // Все кнопки навигации
+
+	const repairTypesSlider = document.querySelector('.repair-types-slider'); // все блоки div с картинками
+	const typesRepairItem = document.querySelectorAll('.types-repair-item'); // блок div с картинками (5 блоков)
 	const sliderCounterContentCurrent = document.querySelector('.slider-counter-content__current');
 	const sliderCounterContentTotal = document.getElementById('slider-counter-repair-total');
 
@@ -12,6 +15,9 @@ const repairTypesSlider = () => {
 	let countRepairsBase = 0;
 	let currentSlideRepairs = 0;
 	let currentSlideRepairsBase = 0;
+
+	let countIndex = 0;
+
 	let total = typesRepairItem[0].children.length;
 	const current = 1;
 
@@ -169,47 +175,138 @@ const repairTypesSlider = () => {
 		}
 	};
 
+	// ==================================================
+
+	const nextSlide = (indNavBtn) => {
+		typesRepairItem.forEach((pictureDiv, indPicDiv) => {
+			if (indNavBtn === indPicDiv) {
+				const go = () => {
+					// const countRepairsBase = 5;
+					let globalCount = countRepairs;
+					countRepairs += 1;
+					globalCount += 1;
+					console.log('~ countRepairs', countRepairs);
+					pictureDiv.style.transform = `translateY(${-countRepairs}%)`;
+					const animate = requestAnimationFrame(go);
+					if (globalCount === 20) {
+						cancelAnimationFrame(animate);
+						// countRepairs = 0;
+					}
+					if (globalCount === 40) {
+						cancelAnimationFrame(animate);
+					}
+					if (globalCount === 60) {
+						cancelAnimationFrame(animate);
+					}
+					if (globalCount === 80) {
+						cancelAnimationFrame(animate);
+					}
+				};
+				requestAnimationFrame(go);
+				// pictureDiv Пролистываем блоки с картинками div ниже
+			}
+		});
+	};
+
+	const prevSlide = () => {};
+
+	/* Показываем блок с картинками */
+	const showFirstSlide = (indNavBtn = 0, countIndex = 0) => {
+		typesRepairItem.forEach((pictureDiv, indPicDiv) => {
+			pictureDiv.style.display = 'none';
+			if (indNavBtn === indPicDiv) {
+				pictureDiv.style.display = 'block';
+				sliderCounterContentCurrent.textContent = countIndex + 1; // Обновляем счетчики
+				sliderCounterContentTotal.textContent = pictureDiv.querySelectorAll('.repair-types-slider__slide').length;
+			}
+		});
+	};
+
+	/* Слушаем клики по главному блоку и делегируем события */
 	rowReverse.addEventListener('click', (e) => {
-		const target = e.target;
-		if (target.tagName === 'BUTTON') {
-			[...navListRepair.children].forEach((item, i) => {
-				item.classList.remove('active');
-				if (item === target) {
-					item.classList.add('active');
-					addActiveClass(typesRepairItem, i, 'types-repair-item--active');
+		if (e.target.tagName === 'BUTTON') {
+			navigationButtons.forEach((btn, indNavBtn) => {
+				// Делаем кнопку активной
+				btn.classList.remove('active');
+				if (btn === e.target) {
+					btn.classList.add('active');
+					countIndex = 0;
+					showFirstSlide(indNavBtn, countIndex); //
+
+					// addActiveClass(typesRepairItem, index, 'types-repair-item--active');
 				}
 			});
-			total = document.querySelector('.types-repair-item--active').children.length;
-			getConutValue();
-			celarStyle();
+
+			// total = document.querySelector('.types-repair-item--active').children.length;
+			// getConutValue();
+			// celarStyle();
 		}
-		if (target.closest('#repair-types-arrow_left')) {
-			currentSlideRepairs--;
-			[...repairTypesSlider.children].forEach((item, i) => {
-				if (item.classList.contains('types-repair-item--active')) {
-					prevRepairs(item, currentSlideRepairs);
-				}
-			});
-		}
-		if (target.closest('#repair-types-arrow_right')) {
-			currentSlideRepairs++;
-			[...repairTypesSlider.children].forEach((item, i) => {
-				if (item.classList.contains('types-repair-item--active')) {
-					let countst = 0;
-					[...item.children].forEach((item, ind) => {
-						countst = ind;
+		// Стрелочки
+
+		if (e.target.closest('#repair-types-arrow_right')) {
+			navigationButtons.forEach((btn, indNavBtn) => {
+				if (btn.classList.contains('active')) {
+					typesRepairItem.forEach((pictureDiv, indPicDiv) => {
+						if (indNavBtn === indPicDiv) {
+							const countAll = pictureDiv.querySelectorAll('.repair-types-slider__slide').length;
+
+							if (countIndex < countAll - 1) {
+								countIndex++;
+								sliderCounterContentCurrent.textContent = countIndex + 1;
+								nextSlide(indNavBtn);
+								// Пролистываем блоки с картинками div ниже
+							}
+						}
 					});
-					nextRepairs(item, currentSlideRepairs, countst);
 				}
 			});
+
+			// currentSlideRepairs++;
+			// [...repairTypesSlider.children].forEach((item) => {
+			// 	if (item.classList.contains('types-repair-item--active')) {
+			// 		let countst = 0;
+			// 		[...item.children].forEach((item, ind) => {
+			// 			countst = ind;
+			// 		});
+
+			// 		nextRepairs(item, currentSlideRepairs, countst);
+			// 	}
+			// });
 		}
-		if (target.closest('#nav-arrow-repair-left_base')) {
+
+		if (e.target.closest('#repair-types-arrow_left')) {
+			navigationButtons.forEach((btn, indNavBtn) => {
+				if (btn.classList.contains('active')) {
+					typesRepairItem.forEach((pictureDiv, indPicDiv) => {
+						if (indNavBtn === indPicDiv) {
+							const countAll = pictureDiv.querySelectorAll('.repair-types-slider__slide').length;
+
+							if (countIndex > 0) {
+								countIndex--;
+								sliderCounterContentCurrent.textContent = countIndex + 1;
+								// Пролистываем блоки с картинками div ниже
+							}
+						}
+					});
+				}
+			});
+
+			// currentSlideRepairs--;
+			// [...repairTypesSlider.children].forEach((item) => {
+			// 	if (item.classList.contains('types-repair-item--active')) {
+			// 		prevRepairs(item, currentSlideRepairs);
+			// 	}
+			// });
+		}
+
+		// Стрелочки кнопок при адаптиве
+		if (e.target.closest('#nav-arrow-repair-left_base')) {
 			currentSlideRepairsBase--;
 			prevRepairs(navListRepair, currentSlideRepairsBase);
 			celarStyle();
 			getConutValue();
 		}
-		if (target.closest('#nav-arrow-repair-right_base')) {
+		if (e.target.closest('#nav-arrow-repair-right_base')) {
 			currentSlideRepairsBase++;
 			nextRepairs(navListRepair, currentSlideRepairsBase, 4);
 			celarStyle();
@@ -217,6 +314,10 @@ const repairTypesSlider = () => {
 		}
 	});
 	addActiveClass(typesRepairItem, 0, 'types-repair-item--active');
+
+	// typesRepairItem;
+	// console.log('~ typesRepairItem', typesRepairItem);
+	// console.log('~ navigationButtons', navigationButtons);
 };
 
 export default repairTypesSlider;
