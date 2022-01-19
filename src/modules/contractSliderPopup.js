@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-const contract = () => {
+const contractSliderPopup = () => {
 	const popupTransparency = document.querySelector('.popup-transparency');
 	const popupTransparencySlider = document.querySelector('.popup-transparency-slider');
 	const sliderCounterContentTotal = document.querySelectorAll('.slider-counter-content__total');
@@ -13,7 +13,7 @@ const contract = () => {
 	let currentSlideDocument = 0;
 	let countDocumentPopup = 0;
 	let currentSlideDocumentPopup = 0;
-  sliderCounterContentTotal[3].textContent = '3';
+	sliderCounterContentTotal[3].textContent = '3';
 	sliderСounterСontentСurrent.textContent = '1';
 
 	const adaptationDocumet = () => {
@@ -69,19 +69,6 @@ const contract = () => {
 			currentSlideDocument--;
 		}
 	};
-
-	transparencySliderWrap.addEventListener('click', (event) => {
-		const target = event.target;
-		event.preventDefault();
-		if (target.closest('#transparency-arrow_left')) {
-			currentSlideDocument--;
-			prevSlideDocument(transparencySlider, currentSlideDocument);
-		}
-		if (target.closest('#transparency-arrow_right')) {
-			currentSlideDocument++;
-			nextSlideDocument(transparencySlider, currentSlideDocument);
-		}
-	});
 
 	const prevSlide = (elem, index) => {
 		if (index >= 0) {
@@ -152,6 +139,18 @@ const contract = () => {
 		if (target.closest('#transparency_right')) {
 			currentSlideDocumentPopup++;
 			nextSlide(popupTransparencySlider, currentSlideDocumentPopup);
+		}
+	});
+
+	transparencySliderWrap.addEventListener('click', (e) => {
+		e.target.preventDefault();
+		if (e.target.closest('#transparency-arrow_left')) {
+			currentSlideDocument--;
+			prevSlideDocument(transparencySlider, currentSlideDocument);
+		}
+		if (e.target.closest('#transparency-arrow_right')) {
+			currentSlideDocument++;
+			nextSlideDocument(transparencySlider, currentSlideDocument);
 		}
 	});
 
