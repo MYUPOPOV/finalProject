@@ -1,99 +1,24 @@
 /*jshint esversion: 6 */
 
 const portfolioSlider = () => {
-	const portfolio = document.querySelector('#portfolio');
-	/* Всплывающие окна */
-	const popup = document.querySelectorAll('.popup');
 	const popupPortfolio = document.querySelector('.popup-portfolio');
-	const popupPortfolioSliderWrap = document.querySelector('.popup-portfolio-slider-wrap');
-	const popupPortfolioSlider = document.querySelector('.popup-portfolio-slider');
+	const popupPortfolioSliderSlide = document.querySelectorAll('.popup-portfolio-slider__slide');
 	const popupPortfolioText = document.querySelectorAll('.popup-portfolio-text');
-
 	const portfolioSlider = document.querySelector('.portfolio-slider');
-	const portfolioSliderWrap = document.querySelector('.portfolio-slider-wrap');
-	const portfolioSliderMobile = document.querySelector('.portfolio-slider-mobile');
-
-	const portfolioSliderSlideFrame = document.querySelectorAll('.portfolio-slider__slide-frame');
-
 	const portfolioArrowLeft = document.querySelector('#portfolio-arrow_left');
 	const portfolioArrowRight = document.querySelector('#portfolio-arrow_right');
-
 	const sliderCounterContentCurrent = document.querySelectorAll('.slider-counter-content__current');
 	const sliderCounterContentTotal = document.querySelectorAll('.slider-counter-content__total');
+	const portfolio = document.querySelector('#portfolio');
 
 	let countPortfolio = 0;
 	let countSliderPortfolio = 0;
 	let countSliderPopupPortfolio = 0;
 
-	sliderCounterContentTotal[1].textContent = '10';
-	sliderCounterContentTotal[3].textContent = '10';
-	sliderCounterContentCurrent[3].textContent = '1';
-	sliderCounterContentCurrent[1].textContent = '1';
+	sliderCounterContentTotal[2].textContent = '10';
+	sliderCounterContentCurrent[2].textContent = '2';
 
-	const addActiveClassSlider = (arr, ind, activeClass) => {
-		if (ind === -1) {
-			ind = 9;
-			countSliderPopupPortfolio = 9;
-			countSliderPortfolio = 9;
-		}
-		if (ind <= arr.children.length - 1) {
-			if (arr.classList.contains('popup-portfolio-slider')) {
-				sliderCounterContentCurrent[3].textContent = ind + 1;
-			}
-			if (arr.classList.contains('portfolio-slider-mobile')) {
-				sliderCounterContentCurrent[1].textContent = ind + 1;
-			}
-			[...arr.children].forEach((item, i) => {
-				item.classList.remove(activeClass);
-				if (i === ind) {
-					item.classList.add(activeClass);
-				}
-			});
-		} else {
-			sliderCounterContentCurrent[3].textContent = '1';
-			sliderCounterContentCurrent[1].textContent = '1';
-			countSliderPopupPortfolio = 0;
-			countSliderPortfolio = 0;
-		}
-	};
-	addActiveClassSlider(popupPortfolioSlider, 0, 'popup-portfolio-slider__slide--active');
-	addActiveClassSlider(portfolioSliderMobile, 0, 'portfolio-slider__slide-frame--active');
-
-	const addActiveClassText = (arr, ind, activeClass) => {
-		if (ind === -1) {
-			ind = 9;
-		}
-		if (ind <= arr.length - 1) {
-			arr.forEach((item, i) => {
-				item.classList.remove(activeClass);
-				if (i === ind) {
-					item.classList.add(activeClass);
-				}
-			});
-		} else {
-			countSliderPopupPortfolio = 0;
-		}
-	};
-	addActiveClassText(popupPortfolioText, 0, 'popup-portfolio-text--active');
-
-	portfolioSliderWrap.addEventListener('click', (e) => {
-		const target = e.target;
-		if (target.closest('#portfolio-arrow-mobile_left')) {
-			countSliderPortfolio--;
-			addActiveClassSlider(portfolioSliderMobile, countSliderPortfolio, 'portfolio-slider__slide-frame--active');
-		}
-		if (target.closest('#portfolio-arrow-mobile_right')) {
-			countSliderPortfolio++;
-			addActiveClassSlider(portfolioSliderMobile, countSliderPortfolio, 'portfolio-slider__slide-frame--active');
-		}
-
-		if (target.closest('.portfolio-slider__slide-frame')) {
-			addActiveClassSlider(popupPortfolioSlider, Number(target.dataset.index), 'popup-portfolio-slider__slide--active');
-			addActiveClassText(popupPortfolioText, Number(target.dataset.index), 'popup-portfolio-text--active');
-			countSliderPopupPortfolio = Number(target.dataset.index);
-		}
-	});
-
+	/* Фотокарточки на основном экране слайд налево */
 	const prevPortfolio = (elem, index) => {
 		portfolioArrowRight.style.display = 'flex';
 		if (index === 0) {
@@ -151,6 +76,7 @@ const portfolioSlider = () => {
 			countSliderPortfolio = 0;
 		}
 	};
+	/* Фотокарточки на основном экране слайд направо */
 	const nextPortfolio = (elem, index) => {
 		portfolioArrowLeft.style.display = 'flex';
 		let countNextPort = 0;
@@ -219,21 +145,40 @@ const portfolioSlider = () => {
 		}
 	};
 
+	/* Открываем нужную карточку */
+	const showPorfolioCase = (slideIndex) => {
+		popupPortfolioSliderSlide.forEach((item, index) => {
+			if (index === slideIndex) {
+				item.style.display = 'block';
+			} else {
+				item.style.display = 'none';
+			}
+		});
+		popupPortfolioText.forEach((item, index) => {
+			if (index === slideIndex) {
+				item.classList.add('visible');
+			} else {
+				item.classList.remove('visible');
+			}
+		});
+		sliderCounterContentCurrent[2].textContent = `${slideIndex + 1}`;
+	};
+
+	// Слушаем нажатие на фотокарточку портфолио => открываем popup
 	portfolio.addEventListener('click', (e) => {
 		if (e.target.closest('.portfolio-slider__slide-frame')) {
-			popup.forEach((item) => {
-				if (item.classList.contains('popup-portfolio')) {
-					item.style.visibility = 'visible';
-					item.addEventListener('click', (e) => {
-						if (!e.target.closest('.popup-dialog-portfolio')) {
-							item.style.visibility = '';
-						}
-					});
+			popupPortfolio.style.visibility = 'visible';
+			popupPortfolio.addEventListener('click', (e) => {
+				if (!e.target.closest('.popup-dialog-portfolio')) {
+					popupPortfolio.style.visibility = '';
 				}
 			});
-
-			// popupPortfolio.classList.add('visible');
+			const slideIndex = Number(e.target.closest('.portfolio-slider__slide-frame').dataset.index);
+			countSliderPopupPortfolio = slideIndex;
+			console.log('~ 	countSliderPopupPortfolio', countSliderPopupPortfolio);
+			showPorfolioCase(countSliderPopupPortfolio);
 		}
+		// Нажатие на стрелочки основного экрана
 		if (e.target.closest('#portfolio-arrow_left')) {
 			countSliderPortfolio--;
 			prevPortfolio(portfolioSlider, countSliderPortfolio);
@@ -247,14 +192,16 @@ const portfolioSlider = () => {
 	popupPortfolio.addEventListener('click', (e) => {
 		const target = e.target;
 		if (target.closest('#popup_portfolio_left')) {
-			countSliderPopupPortfolio--;
-			addActiveClassSlider(popupPortfolioSlider, countSliderPopupPortfolio, 'popup-portfolio-slider__slide--active');
-			addActiveClassText(popupPortfolioText, countSliderPopupPortfolio, 'popup-portfolio-text--active');
+			if (countSliderPopupPortfolio > 0) {
+				countSliderPopupPortfolio--;
+				showPorfolioCase(countSliderPopupPortfolio);
+			}
 		}
 		if (target.closest('#popup_portfolio_right')) {
-			countSliderPopupPortfolio++;
-			addActiveClassSlider(popupPortfolioSlider, countSliderPopupPortfolio, 'popup-portfolio-slider__slide--active');
-			addActiveClassText(popupPortfolioText, countSliderPopupPortfolio, 'popup-portfolio-text--active');
+			if (countSliderPopupPortfolio < 9) {
+				countSliderPopupPortfolio++;
+				showPorfolioCase(countSliderPopupPortfolio);
+			}
 		}
 	});
 };
