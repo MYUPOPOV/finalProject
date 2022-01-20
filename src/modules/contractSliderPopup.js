@@ -143,7 +143,6 @@ const contractSliderPopup = () => {
 	});
 
 	transparencySliderWrap.addEventListener('click', (e) => {
-		e.target.preventDefault();
 		if (e.target.closest('#transparency-arrow_left')) {
 			currentSlideDocument--;
 			prevSlideDocument(transparencySlider, currentSlideDocument);
