@@ -6,8 +6,6 @@ const table = () => {
 		return matches ? decodeURIComponent(matches[1]) : undefined;
 	};
 
-	// getCookie('user');
-
 	if (!getCookie('user')) {
 		window.location.href = './index.html';
 	}
