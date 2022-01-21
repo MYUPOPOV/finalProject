@@ -1,16 +1,13 @@
 /*jshint esversion: 6 */
 
-const renserItems = () => {
+const renderItems = () => {
 	const tbody = document.getElementById('tbody');
 	const typeItem = document.getElementById('typeItem');
-	const btnAddItem = document.querySelector('.btn-addItem');
-	const modal = document.getElementById('modal');
 
 	const getData = (type) => {
-		fetch('./db/db.json')
+		fetch('http://localhost:4550/serviceList')
 			.then((res) => res.json())
 			.then((data) => {
-				data.shift();
 				if (type === 'Все услуги') {
 					renderItems(data);
 				} else if (type === 'renderSelect') {
@@ -89,24 +86,6 @@ const renserItems = () => {
 
 	getData('Все услуги');
 	getData('renderSelect');
-
-	btnAddItem.addEventListener('click', (e) => {
-		modal.style.display = 'flex';
-	});
-
-	modal.addEventListener('click', (e) => {
-		e.preventDefault();
-		if (e.target.closest('.button__close') || e.target.closest('.cancel-button')) {
-			modal.style.display = 'none';
-		}
-		if (e.target.closest('.button-ui_firm')) {
-			console.log(e.target);
-		}
-	});
-
-	// icon__close
-	//   button-ui_firm
-	// cancel-button
 };
 
-export default renserItems;
+export default renderItems;

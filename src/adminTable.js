@@ -1,5 +1,7 @@
 import table from './modules/admin/table';
-import renserItems from './modules/admin/renserItems';
+import renderItems from './modules/admin/renderItems';
+import addItem from './modules/admin/addItem';
 
 table();
-renserItems();
+renderItems();
+addItem();

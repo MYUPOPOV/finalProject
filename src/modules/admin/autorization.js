@@ -10,12 +10,11 @@ const autorization = () => {
 	const spanPassword = spans[1];
 
 	const getData = (login, password) => {
-		fetch('./db/db.json')
+		fetch('http://localhost:4550/autorization')
 			.then((res) => res.json())
 			.then((data) => {
-				const array = data.filter((item) => item.type === 'Autorization');
-				console.log(array[0]);
-				if (array[0].login === login && array[0].password === password) {
+				const userCheck = data[0];
+				if (userCheck.login === login && userCheck.password === password) {
 					window.location.href = './table.html';
 					const user = {
 						login: login,
@@ -23,10 +22,10 @@ const autorization = () => {
 					};
 					document.cookie = 'user=' + JSON.stringify(user);
 				} else {
-					if (array[0].login !== login) {
+					if (userCheck.login !== login) {
 						spanName.style.display = 'block';
 					}
-					if (array[0].password !== password) {
+					if (userCheck.password !== password) {
 						spanPassword.style.display = 'block';
 					}
 				}
