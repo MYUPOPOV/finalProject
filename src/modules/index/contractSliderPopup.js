@@ -154,6 +154,7 @@ const contractSliderPopup = () => {
 	});
 
 	window.addEventListener('resize', adaptationDocumet);
+	adaptationDocumet();
 };
 
 export default contractSliderPopup;

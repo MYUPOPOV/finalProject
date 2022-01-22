@@ -19,7 +19,9 @@ const renderServiceList = () => {
 		fetch('./db/db.json')
 			.then((res) => res.json())
 			.then((data) => {
-				const array = data.filter((item) => item.type === textContent);
+				const array = data.filter((item) => {
+					item.type === textContent;
+				});
 				renderItems(array);
 			});
 	};
