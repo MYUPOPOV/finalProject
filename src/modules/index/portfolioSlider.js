@@ -169,7 +169,7 @@ const portfolioSlider = () => {
 		if (e.target.closest('.portfolio-slider__slide-frame')) {
 			popupPortfolio.style.visibility = 'visible';
 			popupPortfolio.addEventListener('click', (e) => {
-				if (!e.target.closest('.popup-dialog-portfolio')) {
+				if (!e.target.closest('.popup-dialog-portfolio') || e.target.closest('#portfolio-close')) {
 					popupPortfolio.style.visibility = '';
 				}
 			});

@@ -191,6 +191,7 @@ const repairTypesSlider = () => {
 			celarStyle();
 			getConutValue();
 		}
+  
 	});
 
 	addActiveClass(typesRepairItem, 0, 'types-repair-item--active');

@@ -16,16 +16,19 @@ const smoothScroll = () => {
 		if (window.screen.width < 576) {
 			popupDialogMenu.style.transform = 'translate3d(0, -1040px, 0)';
 		}
+		window.isMenuShown = false;
 	};
 
-	menuItems.forEach((item) => {
-		const itemLink = document.getElementById(`${item.getAttribute('href').substring(1)}`);
-		if (itemLink !== null) {
-			item.addEventListener('click', (e) => {
-				e.preventDefault();
-				menuAnimationOff();
-				scrollUp.bind(itemLink)(itemLink);
-			});
+	menuItems.forEach((item, index) => {
+		if (index < 8) {
+			const itemLink = document.getElementById(`${item.getAttribute('href').substring(1)}`);
+			if (itemLink !== null) {
+				item.addEventListener('click', (e) => {
+					e.preventDefault();
+					menuAnimationOff();
+					scrollUp.bind(itemLink)(itemLink);
+				});
+			}
 		}
 	});
 
