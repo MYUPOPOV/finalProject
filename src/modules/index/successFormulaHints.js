@@ -1,172 +1,78 @@
 /*jshint esversion: 6 */
 
 const successFormulaHints = () => {
-	const formulaItemIcon = document.querySelectorAll('.formula-item__icon'); // все иконки
-	const formulaSliderWrap = document.querySelector('.formula-slider-wrap'); // Весь блок с иконками
-	const formulaSlider = document.querySelector('.formula-slider'); // Блок под formulaSliderWrap
-	let countWelcome = 0;
-	let countSlideWelcome = 0;
+	const problems = document.getElementById('formula');
+	const allProblemsDesktop = problems.querySelectorAll('.row .formula-item');
+	const formulaSlider = problems.querySelector('.formula-slider');
 
-	/* Показываем/скрываем подсказки */
-	const showHint = (hint, item) => {
-		const heightToTop = item.getBoundingClientRect().top - 10;
-		hint.closest('.row').style.zIndex = '1000';
-		if (heightToTop < hint.offsetHeight) {
-			hint.style.bottom = `-${hint.offsetHeight + 20}px`;
-			hint.style.zIndex = '1000';
-			hint.classList.add('popup-before');
-		} else {
-			hint.style.bottom = '90px';
-			hint.classList.remove('popup-before');
-		}
-		hint.style.visibility = 'visible';
-		hint.style.opacity = '1';
-	};
-	const hideHint = (hint) => {
-		hint.style.visibility = 'hidden';
-		hint.style.opacity = '0.1';
-		hint.closest('.row').style.zIndex = '0';
-	};
+	const firstPrompt = document.querySelector('.first_prompt');
+	const sectionPrompt = document.querySelector('.formula-slider-wrap');
 
-	const prevWelcome = (elem, index) => {
-		if (index >= 0) {
-			const go = () => {
-				countWelcome -= 5;
-				[...elem.children].forEach((item) => {
-					item.style.transform = `translateX(${-countWelcome}%)`;
-				});
-				const animate = requestAnimationFrame(go);
-				if (innerWidth <= 576) {
-					if (countWelcome === 0) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 175) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 350) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 525) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 710) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 885) {
-						cancelAnimationFrame(animate);
-					}
-				}
-				if (innerWidth <= 1024 && innerWidth >= 576) {
-					if (countWelcome === 0) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 225) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 455) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 685) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 910) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 1135) {
-						cancelAnimationFrame(animate);
-					}
-				}
-			};
-			requestAnimationFrame(go);
-		} else {
-			countSlideWelcome = 0;
-		}
-	};
+	const minSlide = 0;
+	const maxSlide = -865;
+	let count = 0;
+	firstPrompt.style.transition = `all 1s`;
 
-	const nextWelcome = (elem, index) => {
-		if (index <= elem.children.length - 1) {
-			const go = () => {
-				countWelcome += 5;
-				[...elem.children].forEach((item) => {
-					item.style.transform = `translateX(${-countWelcome}%)`;
-				});
-				const animate = requestAnimationFrame(go);
-				if (innerWidth <= 576) {
-					if (countWelcome === 175) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 350) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 525) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 710) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 885) {
-						cancelAnimationFrame(animate);
-					}
-				}
-				if (innerWidth <= 1024 && innerWidth >= 576) {
-					if (countWelcome === 225) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 455) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 685) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 910) {
-						cancelAnimationFrame(animate);
-					}
-					if (countWelcome === 1135) {
-						cancelAnimationFrame(animate);
-					}
-				}
-			};
-			requestAnimationFrame(go);
-		} else {
-			countSlideWelcome--;
-		}
-	};
-
-	/* Слушаем клики по всему блоку (при сужении экрана) */
-	formulaSliderWrap.addEventListener('click', (e) => {
-		if (e.target.closest('#formula-arrow_left')) {
-			countSlideWelcome--;
-			prevWelcome(formulaSlider, countSlideWelcome);
-			[...formulaSlider.children].forEach((item) => {
-				item.classList.remove('active-item');
-				item.children[0].children[0].classList.remove('formula-item-popup--active');
-			});
-		}
+	sectionPrompt.addEventListener('click', (e) => {
 		if (e.target.closest('#formula-arrow_right')) {
-			countSlideWelcome++;
-			nextWelcome(formulaSlider, countSlideWelcome);
-			[...formulaSlider.children].forEach((item) => {
-				item.classList.remove('active-item');
-				item.children[0].children[0].classList.remove('formula-item-popup--active');
-			});
-		}
-		if (e.target.closest('.formula-slider__slide')) {
-			e.target.children[0].children[0].classList.toggle('formula-item-popup--active');
-			e.target.classList.toggle('active-item');
+			count -= 173;
+			if (count <= maxSlide) {
+				count = minSlide;
+				firstPrompt.style.marginLeft = `${count}px`;
+			} else {
+				firstPrompt.style.marginLeft = `${count}px`;
+			}
+		} else if (e.target.closest('#formula-arrow_left')) {
+			count += 173;
+			if (count >= minSlide) {
+				count = -692;
+				firstPrompt.style.marginLeft = `${count}px`;
+			} else {
+				firstPrompt.style.marginLeft = `${count}px`;
+			}
 		}
 	});
 
-	/* Показываем всплывающие окна */
-	formulaItemIcon.forEach((item) => {
-		item.addEventListener('mouseover', (e) => {
-			showHint(e.target.parentElement.children[0], item);
-			e.target.parentElement.classList.add('active-item');
-		});
-		item.addEventListener('mouseout', (e) => {
-			hideHint(e.target.parentElement.children[0]);
-			e.target.parentElement.classList.remove('active-item');
+	document.addEventListener('click', (e) => {
+		if (e.target.closest('#problems-arrow_right')) {
+			count -= 300;
+			if (count < -900) {
+				count = 0;
+				problemsWrapper.style.marginLeft = `${count}px`;
+			} else {
+				problemsWrapper.style.marginLeft = `${count}px`;
+			}
+		} else if (e.target.closest('#problems-arrow_left')) {
+			count += 300;
+			if (count > 0) {
+				count = -900;
+				problemsWrapper.style.marginLeft = `${count}px`;
+			} else {
+				problemsWrapper.style.marginLeft = `${count}px`;
+			}
+		}
+	});
+
+	allProblemsDesktop.forEach((elem) => {
+		elem.addEventListener('mouseenter', () => {
+			if (screen.width > 1024) {
+				const popup = elem.querySelector('.formula-item-popup');
+				elem.classList.add('active-item');
+				if (popup.getBoundingClientRect().top < 0) {
+					popup.style.transform = `translateY(${popup.offsetHeight + 120}px)`;
+					elem.classList.add('rotateUp');
+				}
+				elem.addEventListener('mouseleave', () => {
+					elem.classList.remove('active-item');
+					elem.classList.remove('rotateUp');
+					elem.classList.remove('rotateDown');
+					popup.style = '';
+				});
+			}
 		});
 	});
+
+	formulaSlider.style.display = 'flex';
 };
 
 export default successFormulaHints;
