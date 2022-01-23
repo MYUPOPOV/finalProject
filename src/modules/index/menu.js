@@ -6,11 +6,8 @@ const menu = () => {
 	const popupDialogMenu = document.querySelector('.popup-dialog-menu');
 	const popup = document.querySelectorAll('.popup');
 	const menuLink = document.querySelector('.link-list-menu>a');
-	const showRepairTypes = document.getElementById('show-repair-types');
-	const aShowRepairTypes = document.getElementById('a-show-repair-types');
+	const repairTypesMobile = document.getElementById('repair-types-mobile');
 	const footerMenuIcon = document.getElementById('footer-menu-icon');
-
-	console.log('~ showRepairTypes', showRepairTypes);
 
 	let isPhoneNumberShown = false;
 	window.isMenuShown = false;
@@ -93,17 +90,11 @@ const menu = () => {
 		}
 	});
 
-	menuLink.addEventListener('click', () => {
-		showModalRepairTypes();
-		menuAnimationOff();
-	});
-
-	showRepairTypes.addEventListener('click', () => {
-		menuAnimationOff();
-	});
-
-	aShowRepairTypes.addEventListener('click', () => {
-		menuAnimationOff();
+	[menuLink, repairTypesMobile].forEach((item) => {
+		item.addEventListener('click', () => {
+			showModalRepairTypes();
+			menuAnimationOff();
+		});
 	});
 
 	if (window.screen.width >= 576) {

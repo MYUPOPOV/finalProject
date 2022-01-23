@@ -6,7 +6,7 @@ const modals = () => {
 	const linkListRepair = document.querySelectorAll('.link-list-repair');
 	const linkPrivacy = document.querySelectorAll('span.link-privacy');
 	const consultationBtns = document.querySelectorAll('.button.button_wide');
-	// const repairListClose = document.getElementById(' repair-list-close');
+	const repairListClose = document.getElementById('repair-list-close');
 
 	const showModalRepairTypes = () => {
 		popup.forEach((item) => {
@@ -16,13 +16,18 @@ const modals = () => {
 					if (!e.target.closest('.popup-repair-types-content') && !e.target.closest('.popup-repair-types-tab')) {
 						item.style.visibility = '';
 					}
-					if (e.target.closest('.mobile-hide') || e.target.closest('#repair-list-close')) {
+					if (e.target.closest('.close')) {
 						item.style.visibility = '';
 					}
+					console.log(e.target);
 				});
 			}
 		});
 	};
+
+	repairListClose.addEventListener('click', () => {
+		document.querySelector('.popup-repair-types').style.visibility = '';
+	});
 
 	const showModalPrivacy = () => {
 		popup.forEach((item) => {
@@ -50,9 +55,6 @@ const modals = () => {
 		});
 	};
 
-	// menuLink.addEventListener('click', () => {
-	// 	showModalRepairTypes();
-	// });
 	linkListRepair.forEach((item) => {
 		item.addEventListener('click', () => {
 			showModalRepairTypes();
