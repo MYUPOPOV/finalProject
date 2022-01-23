@@ -19,7 +19,6 @@ const modals = () => {
 					if (e.target.closest('.close')) {
 						item.style.visibility = '';
 					}
-					console.log(e.target);
 				});
 			}
 		});

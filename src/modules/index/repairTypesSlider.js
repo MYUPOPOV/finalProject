@@ -7,15 +7,13 @@ const repairTypesSlider = () => {
 	const typesRepairItem = document.querySelectorAll('.types-repair-item'); // блок div с картинками (5 блоков)
 	const sliderCounterContentCurrent = document.querySelector('.slider-counter-content__current');
 	const sliderCounterContentTotal = document.getElementById('slider-counter-repair-total');
-	const current = 1;
-	let countRepairsBase = 0;
-	let currentSlideRepairs = 0;
-	let currentSlideRepairsBase = 0;
 	let countIndex = 0;
-	let total = typesRepairItem[0].children.length;
 	let countPictureDiv = 0;
 	let countSlide = 0;
 	let countPictureStep = 0;
+
+	let globalCounter = 0;
+	let count = 0;
 
 	const nextSlide = (indNavBtn, countAll) => {
 		typesRepairItem.forEach((pictureDiv, indPicDiv) => {
@@ -68,11 +66,6 @@ const repairTypesSlider = () => {
 		});
 	};
 
-	const getConutValue = () => {
-		sliderCounterContentCurrent.textContent = current;
-		sliderCounterContentTotal.textContent = total;
-	};
-
 	const addActiveClass = (arr, ind, activeClass) => {
 		arr.forEach((item, i) => {
 			item.classList.remove(activeClass);
@@ -82,54 +75,28 @@ const repairTypesSlider = () => {
 		});
 	};
 
-	const celarStyle = () => {
-		currentSlideRepairs = 0;
-		typesRepairItem.forEach((item) => {
-			[...item.children].forEach((item) => {
-				item.style.transform = `translateY(0%)`;
-			});
-		});
+	const nextSlideBtn = () => {
+		const move = () => {
+			const animate = requestAnimationFrame(move);
+			count += 1;
+			navListRepair.style.transform = `translateX(${-count}%)`;
+			if (count === 20 || count === 40 || count === 60 || count === 80) {
+				cancelAnimationFrame(animate);
+			}
+		};
+		requestAnimationFrame(move);
 	};
 
-	const prevRepairs = (elem, index) => {
-		if (index >= 0) {
-			sliderCounterContentCurrent.textContent = 1 + currentSlideRepairs;
-			const go = () => {
-				countRepairsBase -= 5;
-				[...elem.children].forEach((item) => {
-					item.style.transform = `translateX(${-countRepairsBase}%)`;
-				});
-				const animate = requestAnimationFrame(go);
-				if (countRepairsBase <= 0 || countRepairsBase === 120 || countRepairsBase === 240 || countRepairsBase === 360 || countRepairsBase === 480) {
-					cancelAnimationFrame(animate);
-				}
-			};
-			requestAnimationFrame(go);
-		} else {
-			currentSlideRepairs = 0;
-			currentSlideRepairsBase = 0;
-		}
-	};
-
-	const nextRepairs = (elem, index, countLenght) => {
-		let countIndex = 0;
-		countIndex = index;
-		if (countIndex <= countLenght) {
-			const go = () => {
-				sliderCounterContentCurrent.textContent = 1 + currentSlideRepairs;
-				countRepairsBase += 5;
-				[...elem.children].forEach((item) => {
-					item.style.transform = `translateX(${-countRepairsBase}%)`;
-				});
-				const animate = requestAnimationFrame(go);
-				if (countRepairsBase <= 0 || countRepairsBase === 120 || countRepairsBase === 240 || countRepairsBase === 360 || countRepairsBase === 480) {
-					cancelAnimationFrame(animate);
-				}
-			};
-			requestAnimationFrame(go);
-		} else {
-			currentSlideRepairsBase--;
-		}
+	const prevSlideBtn = () => {
+		const move = () => {
+			const animate = requestAnimationFrame(move);
+			count -= 1;
+			navListRepair.style.transform = `translateX(${-count}%)`;
+			if (count === 20 || count === 40 || count === 60 || count === 0) {
+				cancelAnimationFrame(animate);
+			}
+		};
+		requestAnimationFrame(move);
 	};
 
 	/* Слушаем клики по главному блоку и делегируем события */
@@ -179,23 +146,37 @@ const repairTypesSlider = () => {
 			});
 		}
 		// Стрелочки кнопок при адаптиве
-		if (e.target.closest('#nav-arrow-repair-left_base')) {
-			currentSlideRepairsBase--;
-			prevRepairs(navListRepair, currentSlideRepairsBase);
-			celarStyle();
-			getConutValue();
-		}
 		if (e.target.closest('#nav-arrow-repair-right_base')) {
-			currentSlideRepairsBase++;
-			nextRepairs(navListRepair, currentSlideRepairsBase, 4);
-			celarStyle();
-			getConutValue();
+			if (globalCounter < 4) {
+				globalCounter++;
+				nextSlideBtn();
+			}
 		}
-  
+		if (e.target.closest('#nav-arrow-repair-left_base')) {
+			if (globalCounter > 0) {
+				globalCounter--;
+				prevSlideBtn();
+			}
+		}
 	});
 
 	addActiveClass(typesRepairItem, 0, 'types-repair-item--active');
-	getConutValue();
+
+	window.addEventListener('resize', () => {
+		if (window.screen.width >= 576) {
+			navListRepair.style.marginLeft = '0px';
+		}
+		if (window.screen.width < 576) {
+			navListRepair.style.marginLeft = '40px';
+		}
+	});
+
+	if (window.screen.width >= 576) {
+		navListRepair.style.marginLeft = '0px';
+	}
+	if (window.screen.width < 576) {
+		navListRepair.style.marginLeft = '40px';
+	}
 };
 
 export default repairTypesSlider;

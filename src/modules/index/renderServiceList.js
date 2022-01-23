@@ -73,13 +73,7 @@ const renderServiceList = () => {
 			const animate = requestAnimationFrame(move);
 			count += 1;
 			navListPopupRepair.style.transform = `translateX(${-count}%)`;
-			if (count === 30) {
-				cancelAnimationFrame(animate);
-			}
-			if (count === 60) {
-				cancelAnimationFrame(animate);
-			}
-			if (count === 90) {
+			if (count === 30 || count === 60 || count === 90) {
 				cancelAnimationFrame(animate);
 			}
 		};
@@ -91,16 +85,7 @@ const renderServiceList = () => {
 			const animate = requestAnimationFrame(move);
 			count -= 1;
 			navListPopupRepair.style.transform = `translateX(${-count}%)`;
-			if (count === 0) {
-				cancelAnimationFrame(animate);
-			}
-			if (count === 30) {
-				cancelAnimationFrame(animate);
-			}
-			if (count === 60) {
-				cancelAnimationFrame(animate);
-			}
-			if (count === 90) {
+			if (count === 0 || count === 30 || count === 60) {
 				cancelAnimationFrame(animate);
 			}
 		};
@@ -111,14 +96,12 @@ const renderServiceList = () => {
 		if (e.target.closest('#nav-arrow-popup-repair_left')) {
 			if (globalCounter > 0) {
 				globalCounter--;
-				console.log('~ globalCounter', globalCounter);
 				prevSlide();
 			}
 		}
 		if (e.target.closest('#nav-arrow-popup-repair_right')) {
 			if (globalCounter < 3) {
 				globalCounter++;
-				console.log('~ globalCounter', globalCounter);
 				nextSlide();
 			}
 		}
