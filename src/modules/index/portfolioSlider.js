@@ -175,7 +175,6 @@ const portfolioSlider = () => {
 			});
 			const slideIndex = Number(e.target.closest('.portfolio-slider__slide-frame').dataset.index);
 			countSliderPopupPortfolio = slideIndex;
-			console.log('~ 	countSliderPopupPortfolio', countSliderPopupPortfolio);
 			showPorfolioCase(countSliderPopupPortfolio);
 		}
 		// Нажатие на стрелочки основного экрана
