@@ -174,9 +174,16 @@ const repairTypesSlider = () => {
 	if (window.screen.width >= 576) {
 		navListRepair.style.marginLeft = '0px';
 	}
+
 	if (window.screen.width < 576) {
 		navListRepair.style.marginLeft = '40px';
 	}
+
+	// if (count !== 0) {
+	// 	globalCounter = 0;
+	// 	count = 0;
+	// 	navListRepair.style.transform = `translateX(${-count}%)`;
+	// }
 };
 
 export default repairTypesSlider;

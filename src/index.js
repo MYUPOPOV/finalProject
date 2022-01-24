@@ -11,6 +11,7 @@ import repairTypesSlider from './modules/index/repairTypesSlider';
 import portfolioSlider from './modules/index/portfolioSlider';
 import contractSliderPopup from './modules/index/contractSliderPopup';
 import rewievsSlider from './modules/index/rewievsSlider';
+import successFormulaSlider from './modules/index/successFormulaSlider';
 
 menu();
 smoothScroll();
@@ -25,3 +26,4 @@ repairTypesSlider();
 portfolioSlider();
 contractSliderPopup();
 rewievsSlider();
+successFormulaSlider();
